@@ -1,0 +1,7 @@
+{
+  "name": "@doppelforge/runtime",
+  "version": "0.1.0",
+  "description": "Universal mock generator for browser and Node",
+  "private": false,
+  "license": "MIT"
+}

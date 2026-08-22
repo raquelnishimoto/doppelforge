@@ -1,0 +1,7 @@
+{
+  "name": "@doppelforge/cli",
+  "version": "0.1.0",
+  "description": "TypeScript extractor and registry generator for doppelforge",
+  "private": false,
+  "license": "MIT"
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@doppelforge/ir",
+  "version": "0.1.0",
+  "description": "Intermediate representation types for doppelforge — the contract between CLI and runtime",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"No tests for types-only package\"",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  },
+  "keywords": [
+    "doppelforge",
+    "typescript",
+    "mock",
+    "testing"
+  ],
+  "license": "MIT"
+}
