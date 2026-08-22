@@ -33,4 +33,4 @@ Early development — pre-alpha. The IR contract is locked and documented. Runti
 
 ## Licence
 
-MIT © [Mayumi Nishimoto]
+MIT © Mayumi Nishimoto
