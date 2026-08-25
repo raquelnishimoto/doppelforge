@@ -2,6 +2,10 @@
 
 > Forge convincing doubles of your data from TypeScript types.
 
+> ⚠️ **Pre-alpha — not ready for production.**
+> The IR contract is locked but the runtime and CLI are under active development.
+> API may change without notice until `v0.1.0`.
+
 doppelforge reads your TypeScript interfaces ahead of time, produces a lightweight `.mock-registry.json`, and uses that registry at runtime to generate realistic mock payloads for browser and Node testing.
 
 ## How it works
