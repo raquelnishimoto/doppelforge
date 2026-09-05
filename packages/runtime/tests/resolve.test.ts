@@ -1,5 +1,5 @@
-import { makeRegistry } from "./utils/makeRegistry";
 import { resolveType } from "../src/resolve";
+import { makeRegistry } from "./utils/makeRegistry";
 import {test, expect} from "vitest";
 
 const registry = makeRegistry({});
