@@ -9,6 +9,8 @@ const Errors = {
     qualifiedIds.map((id) => `  "${id}"`).join('\n'),
   notFound: (typeName: string, available: string[]) =>
     `Type "${typeName}" not found in registry. ` + `Available types: ${available.join(', ')}`,
+  corruptedRegistry: (qualifiedId: string) =>
+    `Corrupted registry: found qualified id "${qualifiedId}" but no matching type entry.`,
 };
 
 export function resolveType(typeName: string, registry: MockRegistry): IRType {
@@ -25,14 +27,26 @@ export function resolveType(typeName: string, registry: MockRegistry): IRType {
     if (resolvedType) {
       return resolvedType;
     }
+
     throw new Error(Errors.ghostAlias(typeName, aliasTarget));
   }
 
   // 3. Check for ambiguous short name
   const qualifiedIds = Object.keys(registry.types).filter((id) => id.split('#')[1] === typeName);
 
-  if (qualifiedIds.length > 0) {
+  if (qualifiedIds.length > 1) {
     throw new Error(Errors.ambiguous(typeName, qualifiedIds));
+  }
+
+  if (qualifiedIds.length === 1) {
+    const [qualifiedId] = qualifiedIds;
+    if (qualifiedId) {
+      const type = registry.types[qualifiedId];
+      if (type) {
+        return type;
+      }
+      throw new Error(Errors.corruptedRegistry(qualifiedId));
+    }
   }
 
   // 4. Nothing found

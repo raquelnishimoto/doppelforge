@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`create() applies override after generation 1`] = `"Mayumi"`;
+
+exports[`create() returns a stable user with seed 1`] = `
+{
+  "id": "Gc!=.)2AES",
+  "name": "G\`4r#_GT.3",
+}
+`;
