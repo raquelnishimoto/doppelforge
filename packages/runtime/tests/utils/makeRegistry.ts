@@ -1,4 +1,4 @@
-import { MockRegistry } from "@doppelforge/ir";
+import type { MockRegistry } from "@doppelforge/ir";
 
 const registry: MockRegistry = {
     schemaVersion: "1.0.0",

@@ -1,4 +1,4 @@
-import { IRType, MockRegistry } from "@doppelforge/ir";
+import type { IRType, MockRegistry } from "@doppelforge/ir";
 
 const Errors = {
     ghostAlias: (typeName: string, aliasTarget: string) => `Alias "${typeName}" points to a non-existent type: "${aliasTarget}". ` +

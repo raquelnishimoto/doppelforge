@@ -1,5 +1,5 @@
-import { Hint, IRField } from "@doppelforge/ir";
-import { Faker } from "@faker-js/faker";
+import type { Hint, IRField } from "@doppelforge/ir";
+import type { Faker } from "@faker-js/faker";
 
 type GenerateValue = string | number | boolean | Date | null;
 
@@ -15,7 +15,7 @@ export function generateField(field: IRField, faker: Faker): GenerateValue {
         const strategyParts = strategy.split(SEPARATOR);
         const fakerFunction = strategyParts.reduce(
             (obj, prop) => {
-                if (obj === undefined) return undefined;
+                if (obj === undefined) {return undefined;}
                 return (obj as Record<string, unknown>)[prop];
             },
             faker as unknown
