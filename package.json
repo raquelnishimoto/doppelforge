@@ -1,27 +1,29 @@
 {
-  "name": "doppelforge",
-  "version": "0.0.1",
-  "private": true,
-  "description": "Forge convincing doubles of your data from TypeScript types",
-  "packageManager": "pnpm@11.15.0",
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "scripts": {
-    "build": "pnpm -r build",
-    "test": "pnpm -r test",
-    "lint": "eslint . && pnpm -r lint",
-    "lint:fix": "eslint . --fix"
-  },
-  "workspaces": [
-    "packages/*"
-  ],
-  "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.10.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import-x": "^4.17.1",
-    "prettier": "^3.9.8",
-    "typescript-eslint": "^8.70.0"
-  }
+    "name": "doppelforge",
+    "version": "0.0.1",
+    "private": true,
+    "description": "Forge convincing doubles of your data from TypeScript types",
+    "packageManager": "pnpm@11.15.0",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "scripts": {
+        "build": "pnpm -r build",
+        "test": "pnpm -r test",
+        "lint": "eslint . && pnpm -r lint",
+        "lint:fix": "eslint . --fix",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "workspaces": [
+        "packages/*"
+    ],
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "eslint": "^10.10.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-import-x": "^4.17.1",
+        "prettier": "^3.9.8",
+        "typescript-eslint": "^8.70.0"
+    }
 }

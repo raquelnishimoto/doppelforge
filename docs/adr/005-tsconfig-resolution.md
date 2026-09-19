@@ -1,6 +1,7 @@
 # ADR 005 — tsconfig Resolution via ts-morph Project
 
 ## Status
+
 Accepted
 
 ## Context
@@ -10,8 +11,8 @@ TypeScript projects use `import` statements to compose types across files. For t
 Modern projects routinely use path aliases:
 
 ```typescript
-import type { User } from "@/models/User";   // not a relative path
-import type { User } from "~/types/User";
+import type { User } from '@/models/User'; // not a relative path
+import type { User } from '~/types/User';
 ```
 
 These aliases are defined in `tsconfig.json` under `compilerOptions.paths`. Without reading the tsconfig, the extractor cannot resolve them.
@@ -39,10 +40,10 @@ The cost delta between B and C is approximately one constructor argument:
 ```typescript
 // Option B equivalent
 const project = new Project();
-project.addSourceFilesAtPaths("src/**/*.ts");
+project.addSourceFilesAtPaths('src/**/*.ts');
 
 // Option C
-const project = new Project({ tsConfigFilePath: "./tsconfig.json" });
+const project = new Project({ tsConfigFilePath: './tsconfig.json' });
 ```
 
 ts-morph already loads a full TypeScript `Program` to support any kind of type analysis. Pointing it at a real tsconfig costs nothing extra at the library level — the `Program` was going to exist regardless, and with a tsconfig it simply resolves paths correctly instead of incorrectly.

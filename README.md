@@ -14,11 +14,11 @@ doppelforge reads your TypeScript interfaces ahead of time, produces a lightweig
 
 ## Packages
 
-| Package | Description |
-|---|---|
-| [`@doppelforge/ir`](./packages/ir/README.md) | IR type definitions — the contract between CLI and runtime |
-| `@doppelforge/cli` | TypeScript extractor and registry generator *(coming soon)* |
-| `@doppelforge/runtime` | Universal mock generator for browser and Node *(coming soon)* |
+| Package                                      | Description                                                   |
+| -------------------------------------------- | ------------------------------------------------------------- |
+| [`@doppelforge/ir`](./packages/ir/README.md) | IR type definitions — the contract between CLI and runtime    |
+| `@doppelforge/cli`                           | TypeScript extractor and registry generator _(coming soon)_   |
+| `@doppelforge/runtime`                       | Universal mock generator for browser and Node _(coming soon)_ |
 
 ## Architecture
 

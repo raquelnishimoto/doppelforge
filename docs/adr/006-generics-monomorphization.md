@@ -1,6 +1,7 @@
 # ADR 006 — Generics via Monomorphization at Use Sites
 
 ## Status
+
 Accepted (implementation deferred to v0.2)
 
 ## Context
@@ -9,13 +10,13 @@ TypeScript generics are common in real projects:
 
 ```typescript
 interface ApiResponse<T> {
-  data: T;
-  status: number;
-  error?: string;
+    data: T;
+    status: number;
+    error?: string;
 }
 
 // concrete use sites:
-type UserResponse    = ApiResponse<User>;
+type UserResponse = ApiResponse<User>;
 type ProductResponse = ApiResponse<Product>;
 ```
 
@@ -48,8 +49,10 @@ The runtime's core design principle is that it is TypeScript-blind — it receiv
 The extractor finds concrete use sites — property types, return types, type alias declarations:
 
 ```typescript
-type UserResponse = ApiResponse<User>;           // use site
-interface Dashboard { response: ApiResponse<User> } // another use site
+type UserResponse = ApiResponse<User>; // use site
+interface Dashboard {
+    response: ApiResponse<User>;
+} // another use site
 ```
 
 For each unique instantiation, it substitutes type arguments (using the TypeScript checker) and registers the result:

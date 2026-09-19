@@ -1,6 +1,7 @@
 # ADR 003 — Qualified Identifiers and Short-Name Aliases
 
 ## Status
+
 Accepted
 
 ## Context
@@ -9,10 +10,16 @@ Real projects frequently define types with identical names in different files:
 
 ```typescript
 // src/models/user.ts
-export interface User { id: string; passwordHash: string; }
+export interface User {
+    id: string;
+    passwordHash: string;
+}
 
 // src/api/responses.ts
-export interface User { id: string; displayName: string; }
+export interface User {
+    id: string;
+    displayName: string;
+}
 ```
 
 The registry is keyed by type name. Without an explicit addressing strategy, the second `User` silently overwrites the first. Worse: a `reference.ref: "User"` now points at whichever definition was registered last — silent corruption, no error.
@@ -42,17 +49,21 @@ This separates two concerns that should never have been conflated: **identity** 
 The pattern is well-established: DNS separates IP addresses (identity) from domain names (ergonomics). Filesystems separate inodes (identity) from paths (ergonomics). This registry does the same.
 
 **Qualified identifier format:**
+
 ```
 <relative-file-path>#<TypeName>
 ```
+
 File path is relative to the project root (`tsconfig.json` location). This makes qualified ids stable across machines while remaining human-readable.
 
 **Alias rules:**
+
 - A short name is added to `aliases` only if it maps to exactly one qualified id across all registered types
 - If a short name maps to two or more qualified ids, it is omitted from `aliases` and an `AMBIGUOUS_ALIAS` diagnostic is emitted
 - `reference.ref` always contains a qualified id — never an alias — so references are stable regardless of alias ambiguity
 
 **Consumer experience on collision:**
+
 ```
 // mock.create("User") throws:
 // "User" is ambiguous.
@@ -60,6 +71,7 @@ File path is relative to the project root (`tsconfig.json` location). This makes
 //   "src/models/user.ts#User"
 //   "src/api/responses.ts#User"
 ```
+
 Loud, specific, actionable — not silent corruption.
 
 ## Consequences

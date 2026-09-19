@@ -17,8 +17,8 @@
  * e.g. { strategy: "internet.email" } or { strategy: "number", args: { min: 10, max: 150 } }
  */
 export interface Hint {
-  strategy: string;
-  args?: Record<string, unknown>;
+    strategy: string;
+    args?: Record<string, unknown>;
 }
 
 // ---------------------------------------------------------------------------
@@ -35,9 +35,9 @@ export interface Hint {
  * A field may be both (e.g. deletedAt?: string | null).
  */
 export interface FieldMeta {
-  optional?: boolean;
-  nullable?: boolean;
-  hint?: Hint;
+    optional?: boolean;
+    nullable?: boolean;
+    hint?: Hint;
 }
 
 // ---------------------------------------------------------------------------
@@ -46,7 +46,7 @@ export interface FieldMeta {
 
 /** A primitive scalar — string, number, boolean, or date. */
 export type PrimitiveField = {
-  kind: "string" | "number" | "boolean" | "date";
+    kind: 'string' | 'number' | 'boolean' | 'date';
 } & FieldMeta;
 
 /**
@@ -55,8 +55,8 @@ export type PrimitiveField = {
  * member is a literal value (e.g. "admin" | "user").
  */
 export type EnumField = {
-  kind: "enum";
-  values: (string | number)[];
+    kind: 'enum';
+    values: (string | number)[];
 } & FieldMeta;
 
 /**
@@ -65,8 +65,8 @@ export type EnumField = {
  * `items` is itself a full IRField — may be any kind.
  */
 export type ArrayField = {
-  kind: "array";
-  items: IRField;
+    kind: 'array';
+    items: IRField;
 } & FieldMeta;
 
 /**
@@ -75,8 +75,8 @@ export type ArrayField = {
  * The runtime generates exactly `elements.length` values in order.
  */
 export type TupleField = {
-  kind: "tuple";
-  elements: IRField[];
+    kind: 'tuple';
+    elements: IRField[];
 } & FieldMeta;
 
 /**
@@ -85,8 +85,8 @@ export type TupleField = {
  * Options may themselves be any IRField kind, including nested enums.
  */
 export type UnionField = {
-  kind: "union";
-  options: IRField[];
+    kind: 'union';
+    options: IRField[];
 } & FieldMeta;
 
 /**
@@ -97,8 +97,8 @@ export type UnionField = {
  * The runtime is responsible for depth-limiting recursive resolution.
  */
 export type ReferenceField = {
-  kind: "reference";
-  ref: string;
+    kind: 'reference';
+    ref: string;
 } & FieldMeta;
 
 /**
@@ -110,8 +110,8 @@ export type ReferenceField = {
  * The runtime generates null for unknown fields. It does not error.
  */
 export type UnknownField = {
-  kind: "unknown";
-  raw?: string;
+    kind: 'unknown';
+    raw?: string;
 } & FieldMeta;
 
 /**
@@ -119,13 +119,13 @@ export type UnknownField = {
  * Every variant carries FieldMeta (optional, nullable, hint).
  */
 export type IRField =
-  | PrimitiveField
-  | EnumField
-  | ArrayField
-  | TupleField
-  | UnionField
-  | ReferenceField
-  | UnknownField;
+    | PrimitiveField
+    | EnumField
+    | ArrayField
+    | TupleField
+    | UnionField
+    | ReferenceField
+    | UnknownField;
 
 // ---------------------------------------------------------------------------
 // IRType
@@ -140,16 +140,16 @@ export type IRField =
  * It exists to avoid a breaking change when generic support is added.
  */
 export interface IRType {
-  name: string;
-  fields: Record<string, IRField>;
-  typeParameters?: { name: string; constraint?: string }[];
+    name: string;
+    fields: Record<string, IRField>;
+    typeParameters?: { name: string; constraint?: string }[];
 }
 
 // ---------------------------------------------------------------------------
 // Diagnostics
 // ---------------------------------------------------------------------------
 
-export type DiagnosticSeverity = "error" | "warning" | "info";
+export type DiagnosticSeverity = 'error' | 'warning' | 'info';
 
 /**
  * Standard diagnostic codes emitted by the extractor.
@@ -158,18 +158,18 @@ export type DiagnosticSeverity = "error" | "warning" | "info";
  * considered a breaking change.
  */
 export type DiagnosticCode =
-  | "UNRESOLVED_REFERENCE"   // a reference.ref target was not found in the registry
-  | "UNSUPPORTED_CONSTRUCT"  // a TypeScript construct is not yet supported
-  | "HINT_GAP"               // no hint and no field-name inference match
-  | "AMBIGUOUS_ALIAS"        // a short name maps to more than one qualified id
-  | "GENERIC_SKIPPED";       // a generic declaration was skipped — only instantiations are registered
+    | 'UNRESOLVED_REFERENCE' // a reference.ref target was not found in the registry
+    | 'UNSUPPORTED_CONSTRUCT' // a TypeScript construct is not yet supported
+    | 'HINT_GAP' // no hint and no field-name inference match
+    | 'AMBIGUOUS_ALIAS' // a short name maps to more than one qualified id
+    | 'GENERIC_SKIPPED'; // a generic declaration was skipped — only instantiations are registered
 
 export interface Diagnostic {
-  severity: DiagnosticSeverity;
-  code: DiagnosticCode;
-  message: string;
-  location?: string;   // e.g. "src/models/user.ts:12:5"
-  field?: string;      // qualified id of the affected field, if applicable
+    severity: DiagnosticSeverity;
+    code: DiagnosticCode;
+    message: string;
+    location?: string; // e.g. "src/models/user.ts:12:5"
+    field?: string; // qualified id of the affected field, if applicable
 }
 
 // ---------------------------------------------------------------------------
@@ -184,8 +184,8 @@ export interface Diagnostic {
  * `diagnostics` — always an array, never null. Empty means clean extraction.
  */
 export interface MockRegistry {
-  schemaVersion: string;
-  types: Record<string, IRType>;
-  aliases: Record<string, string>;
-  diagnostics: Diagnostic[];
+    schemaVersion: string;
+    types: Record<string, IRType>;
+    aliases: Record<string, string>;
+    diagnostics: Diagnostic[];
 }

@@ -1,6 +1,7 @@
 # ADR 002 — Reference by Name Over Structural Inlining
 
 ## Status
+
 Accepted
 
 ## Context

@@ -1,6 +1,7 @@
 # ADR 008 — Diagnostics as a First-Class Registry Field
 
 ## Status
+
 Accepted
 
 ## Context
@@ -34,14 +35,14 @@ More practically: the runtime can surface diagnostics at generation time. `mock.
 
 A deliberate scope boundary governs what becomes a diagnostic:
 
-| Category | Included | Rationale |
-|---|---|---|
-| Unresolvable references | ✅ `UNRESOLVED_REFERENCE` (error) | Byproduct of extraction — the extractor attempted resolution and failed |
-| Unsupported constructs | ✅ `UNSUPPORTED_CONSTRUCT` (warning) | The extractor knows it degraded to `unknown` |
-| Hint gaps | ✅ `HINT_GAP` (info) | The extractor knows no strategy was found for a field |
-| Ambiguous aliases | ✅ `AMBIGUOUS_ALIAS` (warning) | Byproduct of the addressing model |
-| Skipped generic declarations | ✅ `GENERIC_SKIPPED` (warning) | The extractor explicitly skipped a type it cannot register |
-| Type coherence (field named `email` typed as `number`) | ❌ Deferred to v0.2 | Requires semantic opinion beyond extraction — scope of a linter, not an extractor |
+| Category                                               | Included                             | Rationale                                                                         |
+| ------------------------------------------------------ | ------------------------------------ | --------------------------------------------------------------------------------- |
+| Unresolvable references                                | ✅ `UNRESOLVED_REFERENCE` (error)    | Byproduct of extraction — the extractor attempted resolution and failed           |
+| Unsupported constructs                                 | ✅ `UNSUPPORTED_CONSTRUCT` (warning) | The extractor knows it degraded to `unknown`                                      |
+| Hint gaps                                              | ✅ `HINT_GAP` (info)                 | The extractor knows no strategy was found for a field                             |
+| Ambiguous aliases                                      | ✅ `AMBIGUOUS_ALIAS` (warning)       | Byproduct of the addressing model                                                 |
+| Skipped generic declarations                           | ✅ `GENERIC_SKIPPED` (warning)       | The extractor explicitly skipped a type it cannot register                        |
+| Type coherence (field named `email` typed as `number`) | ❌ Deferred to v0.2                  | Requires semantic opinion beyond extraction — scope of a linter, not an extractor |
 
 The boundary: **diagnostics that are a byproduct of extraction are in scope. Diagnostics that require correctness opinions beyond extraction are out of scope.**
 
@@ -49,11 +50,11 @@ The boundary: **diagnostics that are a byproduct of extraction are in scope. Dia
 
 ```typescript
 interface Diagnostic {
-  severity: "error" | "warning" | "info";
-  code: string;        // machine-readable, stable across versions
-  message: string;     // human-readable, actionable
-  location?: string;   // "src/models/user.ts:12:5"
-  field?: string;      // qualified id of the affected field
+    severity: 'error' | 'warning' | 'info';
+    code: string; // machine-readable, stable across versions
+    message: string; // human-readable, actionable
+    location?: string; // "src/models/user.ts:12:5"
+    field?: string; // qualified id of the affected field
 }
 ```
 

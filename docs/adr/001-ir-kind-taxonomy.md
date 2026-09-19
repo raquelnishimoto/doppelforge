@@ -1,6 +1,7 @@
 # ADR 001 — IR Field Kind Taxonomy
 
 ## Status
+
 Accepted
 
 ## Context
@@ -32,15 +33,15 @@ Option C — seven distinct kinds, with `unknown` as a first-class member of the
 
 **Why each kind earned its place:**
 
-| Kind | Justification |
-|---|---|
-| `string`, `number`, `boolean`, `date` | Irreducible primitives — every other kind is built from these |
-| `enum` | A fixed, enumerable set of literals requires neither type generation nor recursion — collapsing it into `union` would add unnecessary branching to the runtime for a conceptually distinct case |
-| `array` | Homogeneous variable-length sequences are ubiquitous and can't be represented by `tuple` (fixed length, positional) |
-| `tuple` | Fixed-length positional sequences cannot be faithfully represented as `array` — `array.items` describes one type for all positions; a tuple needs a type per position |
-| `union` | Open-type unions (where at least one member is not a literal) require the runtime to pick a generation strategy, not a value — structurally different from `enum` |
-| `reference` | Cross-type relationships must point by name, not inline, to handle cycles and avoid duplication |
-| `unknown` | Any construct the extractor cannot classify must degrade gracefully — a partially correct registry with some `unknown` fields is more useful than a crashing extractor |
+| Kind                                  | Justification                                                                                                                                                                                   |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `string`, `number`, `boolean`, `date` | Irreducible primitives — every other kind is built from these                                                                                                                                   |
+| `enum`                                | A fixed, enumerable set of literals requires neither type generation nor recursion — collapsing it into `union` would add unnecessary branching to the runtime for a conceptually distinct case |
+| `array`                               | Homogeneous variable-length sequences are ubiquitous and can't be represented by `tuple` (fixed length, positional)                                                                             |
+| `tuple`                               | Fixed-length positional sequences cannot be faithfully represented as `array` — `array.items` describes one type for all positions; a tuple needs a type per position                           |
+| `union`                               | Open-type unions (where at least one member is not a literal) require the runtime to pick a generation strategy, not a value — structurally different from `enum`                               |
+| `reference`                           | Cross-type relationships must point by name, not inline, to handle cycles and avoid duplication                                                                                                 |
+| `unknown`                             | Any construct the extractor cannot classify must degrade gracefully — a partially correct registry with some `unknown` fields is more useful than a crashing extractor                          |
 
 **The `array` / `tuple` distinction was explicitly debated.** The deciding factor: `tuple.elements` is positional and fixed — the runtime generates exactly `elements.length` values, each from its own field. `array.items` generates a variable number of homogeneous values. They are different instructions to the runtime, not variations of the same instruction.
 

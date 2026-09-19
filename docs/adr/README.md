@@ -8,16 +8,16 @@ ADRs are numbered sequentially and never deleted. Superseded decisions get a `Su
 
 ## Index
 
-| # | Title | Status |
-|---|---|---|
-| [001](./001-ir-kind-taxonomy.md) | IR Field Kind Taxonomy | Accepted |
-| [002](./002-reference-by-name.md) | Reference by Name Over Structural Inlining | Accepted |
-| [003](./003-qualified-ids-and-aliases.md) | Qualified Identifiers and Short-Name Aliases | Accepted |
-| [004](./004-syntactic-triage-first.md) | Syntactic Triage First, Type Checker on Escalation | Accepted |
-| [005](./005-tsconfig-resolution.md) | tsconfig Resolution via ts-morph Project | Accepted |
-| [006](./006-generics-monomorphization.md) | Generics via Monomorphization at Use Sites | Accepted |
-| [007](./007-shared-ir-package.md) | Shared `packages/ir` with Zero Compiler Dependencies | Accepted |
-| [008](./008-diagnostics-as-registry-field.md) | Diagnostics as a First-Class Registry Field | Accepted |
+| #                                             | Title                                                | Status   |
+| --------------------------------------------- | ---------------------------------------------------- | -------- |
+| [001](./001-ir-kind-taxonomy.md)              | IR Field Kind Taxonomy                               | Accepted |
+| [002](./002-reference-by-name.md)             | Reference by Name Over Structural Inlining           | Accepted |
+| [003](./003-qualified-ids-and-aliases.md)     | Qualified Identifiers and Short-Name Aliases         | Accepted |
+| [004](./004-syntactic-triage-first.md)        | Syntactic Triage First, Type Checker on Escalation   | Accepted |
+| [005](./005-tsconfig-resolution.md)           | tsconfig Resolution via ts-morph Project             | Accepted |
+| [006](./006-generics-monomorphization.md)     | Generics via Monomorphization at Use Sites           | Accepted |
+| [007](./007-shared-ir-package.md)             | Shared `packages/ir` with Zero Compiler Dependencies | Accepted |
+| [008](./008-diagnostics-as-registry-field.md) | Diagnostics as a First-Class Registry Field          | Accepted |
 
 ## Format
 

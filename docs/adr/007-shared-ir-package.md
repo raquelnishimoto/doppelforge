@@ -1,6 +1,7 @@
 # ADR 007 — Shared `packages/ir` with Zero Compiler Dependencies
 
 ## Status
+
 Accepted
 
 ## Context

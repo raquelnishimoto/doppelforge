@@ -1,6 +1,7 @@
 # ADR 004 — Syntactic Triage First, Type Checker on Escalation
 
 ## Status
+
 Accepted
 
 ## Context
@@ -31,17 +32,17 @@ Option C — syntactic triage first, escalating to the type checker only for nod
 
 **The triage logic:**
 
-| AST Node type | Syntactic answer | Checker needed? |
-|---|---|---|
-| `StringKeyword`, `NumberKeyword`, `BooleanKeyword` | `kind: "string/number/boolean"` | No |
-| `TypeReference` to a known builtin (`Date`) | `kind: "date"` | No |
-| `TypeReference` to a locally declared `interface` | `kind: "reference"` | No (just read the declared name) |
-| `ArrayType` | `kind: "array"`, recurse on element | No |
-| `TupleType` | `kind: "tuple"`, recurse on elements | No |
-| `UnionType` (all `LiteralType` members) | `kind: "enum"` | No |
-| `UnionType` (any non-literal member) | `kind: "union"`, recurse on members | No |
-| `TypeReference` to a `type` alias, generic, or utility type | Escalate | **Yes** |
-| `ConditionalType`, `MappedType`, `IndexedAccessType` | `kind: "unknown"` (deferred) | No (skip, don't compute) |
+| AST Node type                                               | Syntactic answer                     | Checker needed?                  |
+| ----------------------------------------------------------- | ------------------------------------ | -------------------------------- |
+| `StringKeyword`, `NumberKeyword`, `BooleanKeyword`          | `kind: "string/number/boolean"`      | No                               |
+| `TypeReference` to a known builtin (`Date`)                 | `kind: "date"`                       | No                               |
+| `TypeReference` to a locally declared `interface`           | `kind: "reference"`                  | No (just read the declared name) |
+| `ArrayType`                                                 | `kind: "array"`, recurse on element  | No                               |
+| `TupleType`                                                 | `kind: "tuple"`, recurse on elements | No                               |
+| `UnionType` (all `LiteralType` members)                     | `kind: "enum"`                       | No                               |
+| `UnionType` (any non-literal member)                        | `kind: "union"`, recurse on members  | No                               |
+| `TypeReference` to a `type` alias, generic, or utility type | Escalate                             | **Yes**                          |
+| `ConditionalType`, `MappedType`, `IndexedAccessType`        | `kind: "unknown"` (deferred)         | No (skip, don't compute)         |
 
 **Why this is not trial-and-error escalation:**
 The triage classifies every node correctly on the first pass. It never attempts syntactic classification and falls back to the checker on failure — it identifies upfront which category a node belongs to and routes accordingly. For a realistic codebase (mostly plain interfaces, a handful of utility types), checker invocations represent roughly 5–10% of total field classifications.
