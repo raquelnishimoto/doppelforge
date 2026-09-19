@@ -11,14 +11,14 @@ Real projects frequently define types with identical names in different files:
 ```typescript
 // src/models/user.ts
 export interface User {
-    id: string;
-    passwordHash: string;
+  id: string;
+  passwordHash: string;
 }
 
 // src/api/responses.ts
 export interface User {
-    id: string;
-    displayName: string;
+  id: string;
+  displayName: string;
 }
 ```
 

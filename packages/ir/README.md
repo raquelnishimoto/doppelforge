@@ -39,8 +39,8 @@ A structured instruction to the runtime about how to generate a value for a spec
 
 ```typescript
 interface Hint {
-    strategy: string; // e.g. "internet.email", "string.uuid"
-    args?: Record<string, unknown>; // e.g. { min: 10, max: 150 }
+  strategy: string; // e.g. "internet.email", "string.uuid"
+  args?: Record<string, unknown>; // e.g. { min: 10, max: 150 }
 }
 ```
 
@@ -54,9 +54,9 @@ Metadata orthogonal to a field's shape. Carried by every `IRField` variant.
 
 ```typescript
 interface FieldMeta {
-    optional?: boolean; // true if the property is declared with ?:
-    nullable?: boolean; // true if null is in the field's type union
-    hint?: Hint; // explicit generation strategy override
+  optional?: boolean; // true if the property is declared with ?:
+  nullable?: boolean; // true if null is in the field's type union
+  hint?: Hint; // explicit generation strategy override
 }
 ```
 
@@ -77,13 +77,13 @@ A discriminated union on `kind`. Every variant intersects `FieldMeta`.
 
 ```typescript
 type IRField =
-    | ({ kind: 'string' | 'number' | 'boolean' | 'date' } & FieldMeta)
-    | ({ kind: 'enum'; values: (string | number)[] } & FieldMeta)
-    | ({ kind: 'array'; items: IRField } & FieldMeta)
-    | ({ kind: 'tuple'; elements: IRField[] } & FieldMeta)
-    | ({ kind: 'union'; options: IRField[] } & FieldMeta)
-    | ({ kind: 'reference'; ref: string } & FieldMeta)
-    | ({ kind: 'unknown'; raw?: string } & FieldMeta);
+  | ({ kind: 'string' | 'number' | 'boolean' | 'date' } & FieldMeta)
+  | ({ kind: 'enum'; values: (string | number)[] } & FieldMeta)
+  | ({ kind: 'array'; items: IRField } & FieldMeta)
+  | ({ kind: 'tuple'; elements: IRField[] } & FieldMeta)
+  | ({ kind: 'union'; options: IRField[] } & FieldMeta)
+  | ({ kind: 'reference'; ref: string } & FieldMeta)
+  | ({ kind: 'unknown'; raw?: string } & FieldMeta);
 ```
 
 ---
@@ -112,8 +112,8 @@ Used for both TypeScript `enum` declarations and unions where **every member is 
 ```typescript
 // Both of these produce the same IR:
 enum Role {
-    Admin = 'admin',
-    User = 'user',
+  Admin = 'admin',
+  User = 'user',
 }
 type Role = 'admin' | 'user';
 ```
@@ -229,9 +229,9 @@ A named, registrable type — the result of extracting one interface, type alias
 
 ```typescript
 interface IRType {
-    name: string;
-    fields: Record<string, IRField>;
-    typeParameters?: { name: string; constraint?: string }[];
+  name: string;
+  fields: Record<string, IRField>;
+  typeParameters?: { name: string; constraint?: string }[];
 }
 ```
 
@@ -253,11 +253,11 @@ A structured message emitted by the extractor when it encounters something notew
 type DiagnosticSeverity = 'error' | 'warning' | 'info';
 
 interface Diagnostic {
-    severity: DiagnosticSeverity;
-    code: string; // e.g. "UNRESOLVED_REFERENCE", "HINT_GAP", "UNSUPPORTED_CONSTRUCT"
-    message: string; // human-readable, actionable
-    location?: string; // "src/models/user.ts:12:5"
-    field?: string; // qualified id of the affected field, if applicable
+  severity: DiagnosticSeverity;
+  code: string; // e.g. "UNRESOLVED_REFERENCE", "HINT_GAP", "UNSUPPORTED_CONSTRUCT"
+  message: string; // human-readable, actionable
+  location?: string; // "src/models/user.ts:12:5"
+  field?: string; // qualified id of the affected field, if applicable
 }
 ```
 
@@ -287,10 +287,10 @@ The root envelope. This is the `.mock-registry.json` file on disk.
 
 ```typescript
 interface MockRegistry {
-    schemaVersion: string;
-    types: Record<string, IRType>;
-    aliases: Record<string, string>;
-    diagnostics: Diagnostic[];
+  schemaVersion: string;
+  types: Record<string, IRType>;
+  aliases: Record<string, string>;
+  diagnostics: Diagnostic[];
 }
 ```
 
@@ -333,10 +333,10 @@ The `aliases` map provides ergonomic short-name access for consumers:
 
 ```json
 {
-    "aliases": {
-        "Post": "src/models/post.ts#Post",
-        "Product": "src/models/product.ts#Product"
-    }
+  "aliases": {
+    "Post": "src/models/post.ts#Post",
+    "Product": "src/models/product.ts#Product"
+  }
 }
 ```
 
@@ -351,21 +351,21 @@ A short name is omitted from `aliases` if it maps to more than one qualified id 
 ```typescript
 // src/models/user.ts
 export interface User {
-    /** @mock { strategy: "internet.email" } */
-    email: string;
-    username: string;
-    age?: number;
-    deletedAt?: string | null;
-    role: 'admin' | 'user';
-    posts: Post[];
+  /** @mock { strategy: "internet.email" } */
+  email: string;
+  username: string;
+  age?: number;
+  deletedAt?: string | null;
+  role: 'admin' | 'user';
+  posts: Post[];
 }
 
 // src/models/post.ts
 export interface Post {
-    title: string;
-    author: User;
-    tags: string[];
-    coordinates: [number, number];
+  title: string;
+  author: User;
+  tags: string[];
+  coordinates: [number, number];
 }
 ```
 
@@ -373,48 +373,48 @@ export interface Post {
 
 ```json
 {
-    "schemaVersion": "1.0.0",
-    "types": {
-        "src/models/user.ts#User": {
-            "name": "User",
-            "fields": {
-                "email": { "kind": "string", "hint": { "strategy": "internet.email" } },
-                "username": { "kind": "string" },
-                "age": { "kind": "number", "optional": true },
-                "deletedAt": { "kind": "string", "optional": true, "nullable": true },
-                "role": { "kind": "enum", "values": ["admin", "user"] },
-                "posts": {
-                    "kind": "array",
-                    "items": { "kind": "reference", "ref": "src/models/post.ts#Post" }
-                }
-            }
-        },
-        "src/models/post.ts#Post": {
-            "name": "Post",
-            "fields": {
-                "title": { "kind": "string" },
-                "author": { "kind": "reference", "ref": "src/models/user.ts#User" },
-                "tags": { "kind": "array", "items": { "kind": "string" } },
-                "coordinates": {
-                    "kind": "tuple",
-                    "elements": [{ "kind": "number" }, { "kind": "number" }]
-                }
-            }
+  "schemaVersion": "1.0.0",
+  "types": {
+    "src/models/user.ts#User": {
+      "name": "User",
+      "fields": {
+        "email": { "kind": "string", "hint": { "strategy": "internet.email" } },
+        "username": { "kind": "string" },
+        "age": { "kind": "number", "optional": true },
+        "deletedAt": { "kind": "string", "optional": true, "nullable": true },
+        "role": { "kind": "enum", "values": ["admin", "user"] },
+        "posts": {
+          "kind": "array",
+          "items": { "kind": "reference", "ref": "src/models/post.ts#Post" }
         }
+      }
     },
-    "aliases": {
-        "User": "src/models/user.ts#User",
-        "Post": "src/models/post.ts#Post"
-    },
-    "diagnostics": [
-        {
-            "severity": "info",
-            "code": "HINT_GAP",
-            "message": "Field 'username' has no hint and no field-name inference match. A generic string will be generated.",
-            "location": "src/models/user.ts:4",
-            "field": "src/models/user.ts#User.username"
+    "src/models/post.ts#Post": {
+      "name": "Post",
+      "fields": {
+        "title": { "kind": "string" },
+        "author": { "kind": "reference", "ref": "src/models/user.ts#User" },
+        "tags": { "kind": "array", "items": { "kind": "string" } },
+        "coordinates": {
+          "kind": "tuple",
+          "elements": [{ "kind": "number" }, { "kind": "number" }]
         }
-    ]
+      }
+    }
+  },
+  "aliases": {
+    "User": "src/models/user.ts#User",
+    "Post": "src/models/post.ts#Post"
+  },
+  "diagnostics": [
+    {
+      "severity": "info",
+      "code": "HINT_GAP",
+      "message": "Field 'username' has no hint and no field-name inference match. A generic string will be generated.",
+      "location": "src/models/user.ts:4",
+      "field": "src/models/user.ts#User.username"
+    }
+  ]
 }
 ```
 

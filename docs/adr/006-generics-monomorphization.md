@@ -10,9 +10,9 @@ TypeScript generics are common in real projects:
 
 ```typescript
 interface ApiResponse<T> {
-    data: T;
-    status: number;
-    error?: string;
+  data: T;
+  status: number;
+  error?: string;
 }
 
 // concrete use sites:
@@ -51,7 +51,7 @@ The extractor finds concrete use sites — property types, return types, type al
 ```typescript
 type UserResponse = ApiResponse<User>; // use site
 interface Dashboard {
-    response: ApiResponse<User>;
+  response: ApiResponse<User>;
 } // another use site
 ```
 

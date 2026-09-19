@@ -8,5 +8,5 @@ import { faker } from '@faker-js/faker';
  * mock.seed(123).create('User') // always produces the same User
  */
 export function seed(seed: number): void {
-    faker.seed(seed);
+  faker.seed(seed);
 }

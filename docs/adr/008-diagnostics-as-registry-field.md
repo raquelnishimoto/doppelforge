@@ -50,11 +50,11 @@ The boundary: **diagnostics that are a byproduct of extraction are in scope. Dia
 
 ```typescript
 interface Diagnostic {
-    severity: 'error' | 'warning' | 'info';
-    code: string; // machine-readable, stable across versions
-    message: string; // human-readable, actionable
-    location?: string; // "src/models/user.ts:12:5"
-    field?: string; // qualified id of the affected field
+  severity: 'error' | 'warning' | 'info';
+  code: string; // machine-readable, stable across versions
+  message: string; // human-readable, actionable
+  location?: string; // "src/models/user.ts:12:5"
+  field?: string; // qualified id of the affected field
 }
 ```
 
