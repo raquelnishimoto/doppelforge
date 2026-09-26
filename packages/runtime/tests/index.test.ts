@@ -22,3 +22,40 @@ test('create() throws for unknown type', () => {
 
   expect(() => mock.create('Product')).toThrow('Type "Product" not found');
 });
+
+// createMany
+test('createMany() returns an empty array when count is 0', () => {
+  const mock = createMocker(makeRegistry({}));
+  const post = mock.createMany('Post', 0);
+
+  expect(post.length).toEqual(0);
+});
+
+test('createMany() returns an array with 1 element when count is 1 and type is valid', () => {
+  const mock = createMocker(makeRegistry({}));
+  const post = mock.createMany('Post', 1);
+
+  expect(post.length).toEqual(1);
+});
+
+test('createMany() returns an array with 1 element with override when count is 1 and type has override', () => {
+  const mock = createMocker(makeRegistry({}));
+  const post = mock.createMany('Post', 1, { title: 'Overridden Title' });
+
+  expect(post.length).toEqual(1);
+
+  expect(post[0]).toMatchObject({ title: 'Overridden Title' });
+});
+
+test('createMany() throws when count is 1 and type is not found', () => {
+  const mock = createMocker(makeRegistry({}));
+
+  expect(() => mock.createMany('Product', 1)).toThrow('Type "Product" not found in registry. Available types: Post, GhostType');
+});
+
+test('createMany() returns an array with 2 elements when count is 2 and type is valid', () => {
+  const mock = createMocker(makeRegistry({}));
+  const post = mock.createMany('Post', 2);
+
+  expect(post.length).toEqual(2);
+});

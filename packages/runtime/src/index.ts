@@ -11,11 +11,16 @@ export function createMocker(registry: MockRegistry) {
       return [fieldName, generateField(irField, faker)];
     }));
 
-    return {...result, ...(override ?? {})}
+    return { ...result, ...(override ?? {}) }
   };
 
   const createMany = (typeName: string, count: number, override?: Partial<Record<string, unknown>>) => {
     // Implementation for creating multiple mock instances based on the registry
+    const instances: Record<string, unknown>[] = [];
+    for (let i = 0; i < count; i++) {
+      instances.push(create(typeName, override));
+    }
+    return instances;
   };
 
   const seed = (value: number) => {

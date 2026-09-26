@@ -38,6 +38,7 @@ export function resolveType(typeName: string, registry: MockRegistry): IRType {
     throw new Error(Errors.ambiguous(typeName, qualifiedIds));
   }
 
+  // 4. Found a type by name
   if (qualifiedIds.length === 1) {
     const [qualifiedId] = qualifiedIds;
     if (qualifiedId) {
@@ -49,6 +50,6 @@ export function resolveType(typeName: string, registry: MockRegistry): IRType {
     }
   }
 
-  // 4. Nothing found
+  // 5. Nothing found
   throw new Error(Errors.notFound(typeName, Object.keys(registry.aliases)));
 }
