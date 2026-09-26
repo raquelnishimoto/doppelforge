@@ -59,3 +59,20 @@ test('createMany() returns an array with 2 elements when count is 2 and type is 
 
   expect(post.length).toEqual(2);
 });
+
+
+// seed
+test('seed() returns the mocker instance for chaining', () => {
+  const mock = createMocker(makeRegistry({}));
+  const result = mock.seed(1);
+
+  expect(result).toBe(mock);
+});
+
+test('seed() generates stable results for create() after seeding', () => {
+  const mock = createMocker(makeRegistry({}));
+  const user1 = mock.seed(1).create('User');
+  const user2 = mock.seed(1).create('User');
+
+  expect(user1).toEqual(user2);
+});
